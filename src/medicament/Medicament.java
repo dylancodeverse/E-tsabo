@@ -14,7 +14,7 @@ public class Medicament{
 
     public static Medicament[] select(Connection connection)throws Exception{
         Statement statement = connection.createStatement() ;
-        ResultSet res= statement.executeQuery("select * from v_soinssymptome order by idmedicament");
+        ResultSet res= statement.executeQuery("select * from v_soinssymptome order by idmedicament ,idsymptome ");
         ArrayList<Medicament> ls= new ArrayList<Medicament>();
         Medicament m = new Medicament();
         String medicament ="";
@@ -51,6 +51,10 @@ public class Medicament{
         ls.add(x) ;
 
         return ls.toArray(new Medicament[ls.size()]);
+    }
+
+    public String formerEquation(){
+        return null ;
     }
 
     private void setSoins(Soins s) {

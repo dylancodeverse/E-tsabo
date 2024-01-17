@@ -39,6 +39,11 @@ create table prixUnitairemedicament(
 );
 
 
-create view  v_soinssymptome as select soinssymptome.* , coalesce(prixUnitairemedicament.prix ,0) as prix
+create view v_soinssymptome as with this as
+(select idmedicament ,idsymptome ,efficacite ,0 as prix from soinssymptome union all  
+select medicament.idmedicament , symptome.idsymptome , 0 as efficacite , 0 as prix from medicament,symptome
+union all
+select soinssymptome.idmedicament , soinssymptome. idsymptome ,  soinssymptome. efficacite , prixUnitairemedicament.prix  
 from soinssymptome 
-left join prixUnitairemedicament on prixUnitairemedicament.idmedicament =soinssymptome.idmedicament ;
+ join prixUnitairemedicament on prixUnitairemedicament.idmedicament =soinssymptome.idmedicament )
+ select this.idmedicament , this.idsymptome , max(efficacite) as efficacite , max(prix) as prix from this group by this.idmedicament , this.idsymptome  order by this.idmedicament , this.idsymptome;
