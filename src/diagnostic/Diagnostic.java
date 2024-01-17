@@ -41,15 +41,17 @@ public class Diagnostic {
 
     }
 
-    public Diagnostic[] getProbaDiagnostic(Symptome[] symptomes ,Connection connection) throws Exception{
+    public static Diagnostic[] getProbaDiagnostic(Symptome[] symptomes ,Connection connection) throws Exception{
         Statement statement = connection.createStatement() ;
-        if (!createQueryForSetNomMaladie().isBlank()) {
-            ResultSet res=  statement.executeQuery(createQueryForSetNomMaladie()) ;
+        if (!createQueryForSetNomMaladieFrom(symptomes).isBlank()) {
+            ResultSet res=  statement.executeQuery(createQueryForSetNomMaladieFrom(symptomes)) ;
             ArrayList<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
             while (res.next()) {
-                Diagnostic d = new Diagnostic();                
+                Diagnostic d = new Diagnostic();          
+                d.setSymptomes(symptomes);      
                 d.setNomMaladie(res.getString("maladie"));
                 d.setProba(res.getDouble("proba"));
+                diagnostics.add(d);
             }
             return diagnostics.toArray(new Diagnostic[diagnostics.size()]) ;
         }else{
@@ -61,19 +63,38 @@ public class Diagnostic {
         probabilite = 100 * double1 / symptomes.length ;
     }
 
+    public static String createQueryForSetNomMaladieFrom (Symptome[] symptomes) throws Exception{
+        if ( symptomes!= null) {
+            String x ="with listemaladie as (";
+            Symptome[]s = symptomes ;
+
+            for (int i = 0; i < s.length; i++) {
+                x= x + " select maladie from diagnostic where niveaumin <= "+s[i].getNiveau()+" and "+s[i].getNiveau()+"< niveaumax and agepersonmin<= "+s[i].getAgeCaracteristique()+" and "+s[i].getAgeCaracteristique()+" < agepersonmax and idsymptome = '"+s[i].getSymptome()+"'" ;
+                x= x+" UNION ALL";
+            }
+
+            x =x.substring(0, x.lastIndexOf(" UNION ALL")) +")" ;
+
+            x = x+ ", countMaladie as ( select count(maladie) as proba , maladie from listemaladie group by maladie)  select proba ,maladie from countMaladie order by proba desc" ;
+            return x ;            
+        }else{
+            return "";
+        }
+    }
+
     private String createQueryForSetNomMaladie(){
         if ( getSymptomes()!= null) {
             String x ="with listemaladie as (";
             Symptome[]s = getSymptomes() ;
 
             for (int i = 0; i < s.length; i++) {
-                x= x + " select maladie from diagnostic where niveaumin <= "+s[i].getNiveau()+" and "+s[i].getNiveau()+"< niveaumax and agepersonmin<= "+s[i].getAgeCaracteristique()+" and "+s[i].getAgeCaracteristique()+" < agepersonmax where idsymptome = "+s[i].getSymptome() ;
+                x= x + " select maladie from diagnostic where niveaumin <= "+s[i].getNiveau()+" and "+s[i].getNiveau()+"< niveaumax and agepersonmin<= "+s[i].getAgeCaracteristique()+" and "+s[i].getAgeCaracteristique()+" < agepersonmax and idsymptome = '"+s[i].getSymptome()+"'" ;
                 x= x+" UNION ALL";
             }
 
             x =x.substring(0, x.lastIndexOf(" UNION ALL")) +")" ;
 
-            x = x+ ", countMaladie as ( select count(maladie) as proba , maladie from listemaladie group by maladie) ) select proba ,maladie from countMaladie order by proba" ;
+            x = x+ ", countMaladie as ( select count(maladie) as proba , maladie from listemaladie group by maladie)  select proba ,maladie from countMaladie order by proba desc" ;
             return x ;            
         }else{
             return "";

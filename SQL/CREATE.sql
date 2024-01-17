@@ -19,11 +19,16 @@ create table diagnostic(
 
 -- requete maka an'ny diagnostic:
 
-with listemaladie as
-(select maladie from diagnostic where niveaumin <= ? and ?< niveaumax and agepersonmin<= ? and ? < agepersonmax
-where idsymptome = ?)
+insert into symptome values ('migraine' ,'migraine') ,('lelo','lelo') ,('caca','caca') ,('fatigue','fatigue');
 
-countMaladie as
-(select count(maladie) , maladie from listemaladie group by maladie)
+insert into diagnostic values (default ,'A' ,'migraine' ,4,8,10,20)
+                              ,(default ,'A' ,'lelo' ,4,8,10,20) 
+                              ,(default ,'A' ,'caca' ,4,8,10,20) 
+                              ,(default ,'A' ,'fatigue' ,4,8,10,20) 
+                              ,(default ,'B' ,'migraine' ,2,3,10,20)
+                              ,(default ,'B' ,'lelo' ,4,8,10,20) 
+                              ,(default ,'B' ,'caca' ,4,8,10,20) 
+                              ,(default ,'B' ,'fatigue' ,4,8,10,20) ;
 
 
+with listemaladie as ( select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'lelo' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'migraine' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'caca' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'fatigue'), countMaladie as ( select count(maladie) as proba , maladie from listemaladie group by maladie)  select proba ,maladie from countMaladie order by proba desc

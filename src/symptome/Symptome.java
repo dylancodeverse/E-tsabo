@@ -11,6 +11,11 @@ public class Symptome {
 
 
 
+    public Symptome(String symptome, Integer niveau, Integer ageCaracteristique) {
+        this.symptome = symptome;
+        this.niveau = niveau;
+        this.ageCaracteristique = ageCaracteristique;
+    }
     public String getSymptome() {
         return symptome;
     }
