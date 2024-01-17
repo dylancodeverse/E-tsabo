@@ -39,11 +39,10 @@ create table prixUnitairemedicament(
 );
 
 
-create view v_soinssymptome as with this as
-(select idmedicament ,idsymptome ,efficacite ,0 as prix from soinssymptome union all  
-select medicament.idmedicament , symptome.idsymptome , 0 as efficacite , 0 as prix from medicament,symptome
-union all
-select soinssymptome.idmedicament , soinssymptome. idsymptome ,  soinssymptome. efficacite , prixUnitairemedicament.prix  
-from soinssymptome 
- join prixUnitairemedicament on prixUnitairemedicament.idmedicament =soinssymptome.idmedicament )
- select this.idmedicament , this.idsymptome , max(efficacite) as efficacite , max(prix) as prix from this group by this.idmedicament , this.idsymptome  order by this.idmedicament , this.idsymptome;
+ create view v_soinssymptome as with this as
+(select idmedicament ,idsymptome ,efficacite  from soinssymptome union all  
+select medicament.idmedicament , symptome.idsymptome , 0 as efficacite  from medicament,symptome
+) ,
+  thiss as ( select this.idmedicament , this.idsymptome , sum(efficacite) as efficacite  from this group by this.idmedicament , this.idsymptome  order by this.idmedicament , this.idsymptome)
+select thiss.* , prix from thiss join prixunitairemedicament on thiss.idmedicament = prixunitairemedicament.idmedicament ;
+
