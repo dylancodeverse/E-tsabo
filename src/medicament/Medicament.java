@@ -14,7 +14,7 @@ public class Medicament{
 
     public static Medicament[] select(Connection connection)throws Exception{
         Statement statement = connection.createStatement() ;
-        ResultSet res= statement.executeQuery("select * from v_soinssymptome order by idmedicament ,idsymptome ");
+        ResultSet res= statement.executeQuery("select * from v_soinssymptome ");
         ArrayList<Medicament> ls= new ArrayList<Medicament>();
         Medicament m = new Medicament();
         String medicament ="";
@@ -53,9 +53,44 @@ public class Medicament{
         return ls.toArray(new Medicament[ls.size()]);
     }
 
-    public String formerEquation(){
-        return null ;
+
+    public String getVarContrainteEquilibre(int index){
+        return "("+soins.get(index).getEfficacite()+")"+"["+medicament+"]";
     }
+
+    public static String [] formerEquationContrainteEquilibre(Medicament [] medicaments){
+        String [] s = new String[medicaments[0].getSoins().size()];
+        for (int i = 0; i < s.length; i++) {
+            s[i] = "";
+        }
+        for (int i = 0; i < s.length; i++) {
+            for (int j = 0; j < s.length; j++) {
+                s[i] = s[i] +medicaments[j].getVarContrainteEquilibre(i) ;           
+            }
+        }
+        for (int i = 0; i < s.length; i++) {
+            s[i]= s[i]+" = 0";
+        }
+        return s ;
+    }
+
+    public static String getEquationToMinimize(Medicament[] medicaments){
+        String s= "";
+        for (int i = 0; i < medicaments.length; i++) {
+            s = s+"(" +medicaments[i].getPrixUnitaire() +")" + "["+medicaments[i].getMedicament() +"]" ;
+        }
+        return s; 
+    }
+
+    public static String getLogicalContrainte(Medicament[] medicaments){
+        String s= "";
+        for (int i = 0; i < medicaments.length; i++) {
+            s = s + "(1)"+"["+medicaments[i].getMedicament() +"]" ;
+        }
+        s = s+ ">=0";
+        return s ;
+    }
+
 
     private void setSoins(Soins s) {
         if (soins ==null) {

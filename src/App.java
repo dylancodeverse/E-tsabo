@@ -17,7 +17,14 @@ public class App {
         // new Symptome("caca",5,15), new Symptome("fatigue",5,15)} ,
         // DriverManager.getConnection("jdbc:postgresql://localhost:5432/etsabo","postgres","post")) ;
         try{
-            Medicament.select(c);
+            Medicament[] mds = Medicament.select(c);
+            String [] ss=  Medicament.formerEquationContrainteEquilibre(mds);
+            for (int i = 0; i < ss.length; i++) {
+                System.out.println(ss[i]);
+            }
+            System.out.println(Medicament.getEquationToMinimize(mds));
+
+            System.out.println(Medicament.getLogicalContrainte(mds));
         }
         finally{
             c.close();
