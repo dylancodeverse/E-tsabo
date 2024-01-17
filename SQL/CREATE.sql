@@ -17,18 +17,28 @@ create table diagnostic(
     foreign key (idsymptome) references symptome(idsymptome)
 );
 
--- requete maka an'ny diagnostic:
+create table medicament (
+    idmedicament varchar(250) primary key,
+    medicament varchar(250)
+) ;
 
-insert into symptome values ('migraine' ,'migraine') ,('lelo','lelo') ,('caca','caca') ,('fatigue','fatigue');
+create table soinssymptome (
+    idsoin serial primary key ,
+    idsymptome varchar(250) ,
+    idmedicament varchar(250),
+    efficacite double precision default(0) ,
+    foreign key (idsymptome) references symptome(idsymptome),
+    foreign key (idmedicament) references medicament(idmedicament)    
+);
 
-insert into diagnostic values (default ,'A' ,'migraine' ,4,8,10,20)
-                              ,(default ,'A' ,'lelo' ,4,8,10,20) 
-                              ,(default ,'A' ,'caca' ,4,8,10,20) 
-                              ,(default ,'A' ,'fatigue' ,4,8,10,20) 
-                              ,(default ,'B' ,'migraine' ,2,3,10,20)
-                              ,(default ,'B' ,'lelo' ,4,8,10,20) 
-                              ,(default ,'B' ,'caca' ,4,8,10,20) 
-                              ,(default ,'B' ,'fatigue' ,4,8,10,20) ;
+create table prixUnitairemedicament(
+    idprixUnitairemedicament serial primary key ,
+    idmedicament varchar(250), 
+    prix double precision default(0),
+    foreign key (idmedicament) references medicament(idmedicament)
+);
 
 
-with listemaladie as ( select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'lelo' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'migraine' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'caca' UNION ALL select maladie from diagnostic where niveaumin <= 5 and 5< niveaumax and agepersonmin<= 15 and 15 < agepersonmax and idsymptome = 'fatigue'), countMaladie as ( select count(maladie) as proba , maladie from listemaladie group by maladie)  select proba ,maladie from countMaladie order by proba desc
+create view  v_soinssymptome as select soinssymptome.* , coalesce(prixUnitairemedicament.prix ,0) as prix
+from soinssymptome 
+left join prixUnitairemedicament on prixUnitairemedicament.idmedicament =soinssymptome.idmedicament ;
