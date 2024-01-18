@@ -1,4 +1,4 @@
-package diagnostic;
+package main.diagnostic;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import medicament.CompositionMedicament;
-import symptome.Symptome;
+import main.medicament.CompositionMedicament;
+import main.symptome.Symptome;
+
 
 /**
  * Diagnostic

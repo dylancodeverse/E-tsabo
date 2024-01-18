@@ -1,10 +1,11 @@
-package medicament;
+package main.medicament;
 
 import java.sql.Connection;
 
-import DYNMathOptimisation.Constraint;
-import DYNMathOptimisation.Simplex;
-import symptome.Symptome;
+import main.DYNMathOptimisation.Constraint;
+import main.DYNMathOptimisation.Simplex;
+import main.symptome.Symptome;
+
 
 public class CompositionMedicament {
     Medicament[] medicaments ;

@@ -1,4 +1,4 @@
-package DYNMathOptimisation;
+package main.DYNMathOptimisation;
 
 public class SimplexConstraint extends Constraint{
     String basicVariables ;

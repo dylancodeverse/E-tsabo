@@ -1,12 +1,13 @@
-package medicament;
+package main.medicament;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import DYNMathOptimisation.Simplex;
-import symptome.Symptome;
+import main.DYNMathOptimisation.Simplex;
+import main.symptome.Symptome;
+
 
 
 public class Medicament{

@@ -1,4 +1,4 @@
-package symptome;
+package main.symptome;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

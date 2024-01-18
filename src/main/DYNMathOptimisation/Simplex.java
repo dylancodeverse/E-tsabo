@@ -1,4 +1,4 @@
-package DYNMathOptimisation;
+package main.DYNMathOptimisation;
 
 import java.util.ArrayList;
 

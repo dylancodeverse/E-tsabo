@@ -1,4 +1,4 @@
-package medicament;
+package main.medicament;
 
 public class Soins {
     
