@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import medicament.CompositionMedicament;
 import symptome.Symptome;
 
 /**
@@ -16,11 +17,17 @@ public class Diagnostic {
     Double probabilite ;
     Symptome[] symptomes;
 
+    CompositionMedicament compositionMedicamentOptimal ;
 
 
     public Diagnostic(Symptome[] symptomes , Connection connection) throws Exception{
         setSymptomes(symptomes);
         setNomMaladie(connection);        
+        setCompositionMedicament(symptomes, connection);
+    }
+
+    public void setCompositionMedicament(Symptome[] symptomes2, Connection connection) throws Exception {
+        compositionMedicamentOptimal = new CompositionMedicament(symptomes2, connection);
     }
 
     public Diagnostic() {

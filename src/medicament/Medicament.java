@@ -63,9 +63,9 @@ public class Medicament{
     private static String getWhere(Simplex simplex) {
         String s = " where ";
         for (int i = 0; i < simplex.getMatrix().length; i++) {
-            s = s +  "idsymptome ="+simplex.getMatrix()[i].getBasicVariables() +" and" ;            
+            s = s +  " idmedicament = '"+simplex.getMatrix()[i].getBasicVariables() +"' or" ;            
         }
-        return s.substring( 0, s.lastIndexOf(" and"));
+        return s.substring( 0, s.lastIndexOf(" or"));
         
     }
 

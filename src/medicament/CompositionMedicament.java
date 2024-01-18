@@ -33,10 +33,19 @@ public class CompositionMedicament {
 
         sum = x.getEquation().getSecondMember() ;
 
-        setMedicaments(x);
+        setMedicaments(x,connection);
     }
 
-    private void setMedicaments(Simplex x) {
-
+    private void setMedicaments(Simplex x , Connection connection) throws Exception {
+        Medicament[] medicaments = Medicament.selectWhere(connection, x);
+        for (int i = 0; i < medicaments.length; i++) {
+            for (int j = 0; j < x.getMatrix().length; j++) {
+                if (medicaments[i].getMedicament().equals(x.getMatrix()[j].getBasicVariables())) {
+                    medicaments[i].setQuantite(x.getMatrix()[j].getSecondMember());
+                    break;
+                }
+            }
+        }
+        this.medicaments = medicaments ;
     }
 }
