@@ -14,10 +14,7 @@ insert into diagnostic values (default ,'A'  ,'migraine' ,4,8,10,20)
                               ,(default ,'B' ,'fatigue' ,4,8,10,20) ;
 
 
-create table medicament (
-    idmedicament varchar(250) primary key,
-    medicament varchar(250)
-) ;
+
 
 INSERT INTO medicament (idmedicament, medicament) VALUES 
     ('A', 'A'),
@@ -60,4 +57,8 @@ insert into prixUnitairemedicament values (default , 'D' , 234);
 insert into prixUnitairemedicament values (default , 'C' , 5);
 
 insert into prixUnitairemedicament values (default , 'E' , 25);
+
+insert into client values ('dylan',15);
+insert into client values ('doda',18);
+insert into client values ('dida',13);
 

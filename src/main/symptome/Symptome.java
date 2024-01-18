@@ -22,6 +22,13 @@ public class Symptome {
         this.ageCaracteristique = ageCaracteristique;
     }
 
+    /**
+     * Maka anle symptomes anle client anaty base de donnnees
+     * @param idclient
+     * @param connection
+     * @return
+     * @throws Exception
+     */
     public static Symptome[] getStaticSymptome( String idclient,Connection connection)throws Exception{
         Statement statement= connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from vclientsymptome where idclient = '"+idclient+"'");

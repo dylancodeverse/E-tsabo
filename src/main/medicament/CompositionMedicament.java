@@ -13,8 +13,21 @@ public class CompositionMedicament {
 
     
 
+    /**
+     * Mi creer composition ana fanafody @ alalan'ny symptomes:
+     * 
+     * zavatra anakiroa no ataony :
+     *  mi former anle syntax anle formule izay ho ampiasaina @ simplexe anaovana minimisation
+     *  mi execute anle minimisation de maka ny resultat
+     * 
+     * @param symptomes
+     * @param connection
+     * @throws Exception
+     */
     public CompositionMedicament(Symptome [] symptomes , Connection connection) throws Exception{ 
         Medicament[] mds = Medicament.select(connection);
+
+        // formule
         String [] ss=  Medicament.formerEquationContrainteEquilibre(mds ,symptomes);
         
         for (int i = 0; i < ss.length; i++) {
@@ -31,7 +44,7 @@ public class CompositionMedicament {
 
 
         Simplex x = new Simplex() ;
-
+                            // formule                                                               formule
         x.simplexMinimisation(Medicament.getEquationToMinimize(mds),ss, new Constraint(Medicament.getLogicalContrainte(mds))) ;
 
         sum = x.getEquation().getSecondMember() ;

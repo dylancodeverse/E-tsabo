@@ -22,6 +22,12 @@ public class Diagnostic {
 
     CompositionMedicament compositionMedicamentOptimal ;
 
+    /**
+     * Objectif : maka anle diagnostic @ anarana nle client
+     * @param idClient
+     * @return
+     * @throws Exception
+     */
     public static Diagnostic getFullDiagnostic(String idClient) throws Exception{
         Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/etsabo","postgres","post");
         try{
@@ -56,11 +62,14 @@ public class Diagnostic {
             htmlBuilder.append("<ul>");
 
             for (Medicament medicament : compositionMedicamentOptimal.getMedicaments()) {
-                htmlBuilder.append("<li>");
-                htmlBuilder.append("<p><strong>Médicament:</strong> " + medicament.getMedicament() + "</p>");
-                htmlBuilder.append("<p><strong>Prix unitaire:</strong> " + medicament.getPrixUnitaire() + "</p>");
-                htmlBuilder.append("<p><strong>Quantité:</strong> " + medicament.getQuantite() + "</p>");
-                htmlBuilder.append("</li>");
+                if (medicament.getQuantite()!=0.0) {
+                    htmlBuilder.append("<li>");
+                    htmlBuilder.append("<p><strong>Médicament:</strong> " + medicament.getMedicament() + "</p>");
+                    htmlBuilder.append("<p><strong>Prix unitaire:</strong> " + medicament.getPrixUnitaire() + "</p>");
+                    htmlBuilder.append("<p><strong>Quantité:</strong> " + medicament.getQuantite() + "</p>");
+                    htmlBuilder.append("</li>");                    
+                }
+
             }
 
             htmlBuilder.append("</ul>");
@@ -76,9 +85,17 @@ public class Diagnostic {
         return htmlBuilder.toString();
     }
 
+    /**
+     * Mi former anle diagnostic
+     * @param symptomes
+     * @param connection
+     * @throws Exception
+     */
     public Diagnostic(Symptome[] symptomes , Connection connection) throws Exception{
         setSymptomes(symptomes);
+        // mamantatra anle nom anle aretina @ alalan'ny acces base
         setNomMaladie(connection);        
+        // mamoaka anle composition ana fana
         setCompositionMedicament(symptomes, connection);
     }
 
