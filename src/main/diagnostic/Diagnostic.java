@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import main.medicament.CompositionMedicament;
+import main.medicament.Medicament;
 import main.symptome.Symptome;
 
 
@@ -30,6 +31,49 @@ public class Diagnostic {
         finally{
             c.close();
         }
+    }
+
+
+    public String toHtml() {
+        StringBuilder htmlBuilder = new StringBuilder();
+
+        // // En-tête HTML
+        // htmlBuilder.append("<!DOCTYPE html>");
+        // htmlBuilder.append("<html lang=\"en\">");
+        // htmlBuilder.append("<head>");
+        // htmlBuilder.append("<!-- Les balises meta, title, stylesheets, etc. vont ici -->");
+        // htmlBuilder.append("</head>");
+        // htmlBuilder.append("<body>");
+
+        // Contenu HTML
+        // htmlBuilder.append("<div class=\"container\">");
+        htmlBuilder.append("<h2>Rapport de Diagnostic</h2>");
+        htmlBuilder.append("<p><strong>Nom de la maladie:</strong> " + nomMaladie + "</p>");
+
+        if (compositionMedicamentOptimal != null) {
+            htmlBuilder.append("<h3>Composition de médicaments optimal:</h3>");
+            htmlBuilder.append("<p><strong>Coût total:</strong> " + compositionMedicamentOptimal.getSum() + "</p>");
+            htmlBuilder.append("<ul>");
+
+            for (Medicament medicament : compositionMedicamentOptimal.getMedicaments()) {
+                htmlBuilder.append("<li>");
+                htmlBuilder.append("<p><strong>Médicament:</strong> " + medicament.getMedicament() + "</p>");
+                htmlBuilder.append("<p><strong>Prix unitaire:</strong> " + medicament.getPrixUnitaire() + "</p>");
+                htmlBuilder.append("<p><strong>Quantité:</strong> " + medicament.getQuantite() + "</p>");
+                htmlBuilder.append("</li>");
+            }
+
+            htmlBuilder.append("</ul>");
+        }
+
+        htmlBuilder.append("</div>");
+
+        // Scripts et autres balises HTML vont ici
+
+        htmlBuilder.append("</body>");
+        htmlBuilder.append("</html>");
+
+        return htmlBuilder.toString();
     }
 
     public Diagnostic(Symptome[] symptomes , Connection connection) throws Exception{

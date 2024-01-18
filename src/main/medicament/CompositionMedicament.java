@@ -11,6 +11,8 @@ public class CompositionMedicament {
     Medicament[] medicaments ;
     Double sum ;
 
+    
+
     public CompositionMedicament(Symptome [] symptomes , Connection connection) throws Exception{ 
         Medicament[] mds = Medicament.select(connection);
         String [] ss=  Medicament.formerEquationContrainteEquilibre(mds ,symptomes);
@@ -48,5 +50,20 @@ public class CompositionMedicament {
             }
         }
         this.medicaments = medicaments ;
+    }
+    public Double getSum() {
+        return sum;
+    }
+
+    public Medicament[] getMedicaments() {
+        return medicaments;
+    }
+
+    public void setMedicaments(Medicament[] medicaments) {
+        this.medicaments = medicaments;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
     }
 }
