@@ -46,3 +46,20 @@ select medicament.idmedicament , symptome.idsymptome , 0 as efficacite  from med
   thiss as ( select this.idmedicament , this.idsymptome , sum(efficacite) as efficacite  from this group by this.idmedicament , this.idsymptome  order by this.idmedicament , this.idsymptome)
 select thiss.* , prix from thiss join prixunitairemedicament on thiss.idmedicament = prixunitairemedicament.idmedicament ;
 
+
+
+create table client(
+    idClient varchar(250) primary key ,
+    agecaracteristique int not null
+);
+
+create table clientsymptome(
+    clientsymptomeid serial primary key ,
+    idClient varchar(250),
+    idsymptome varchar(250),
+    niveau integer not null,
+    foreign key (idClient) references client(idClient),
+    foreign key (idsymptome) references symptome(idsymptome)
+);
+
+create view  vclientsymptome as select agecaracteristique , clientsymptome.* from clientsymptome join client on clientsymptome.idClient = client.idClient ;

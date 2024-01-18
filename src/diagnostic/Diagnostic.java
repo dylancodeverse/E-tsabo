@@ -1,6 +1,7 @@
 package diagnostic;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -19,6 +20,16 @@ public class Diagnostic {
 
     CompositionMedicament compositionMedicamentOptimal ;
 
+    public static Diagnostic getFullDiagnostic(String idClient) throws Exception{
+        Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/etsabo","postgres","post");
+        try{
+            Symptome[] s = Symptome.getStaticSymptome(idClient, c);
+            return new Diagnostic(s, c);
+        }
+        finally{
+            c.close();
+        }
+    }
 
     public Diagnostic(Symptome[] symptomes , Connection connection) throws Exception{
         setSymptomes(symptomes);
