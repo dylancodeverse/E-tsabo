@@ -59,4 +59,5 @@ insert into prixUnitairemedicament values (default , 'B' , 234);
 insert into prixUnitairemedicament values (default , 'D' , 234);
 insert into prixUnitairemedicament values (default , 'C' , 5);
 
+insert into prixUnitairemedicament values (default , 'E' , 25);
 

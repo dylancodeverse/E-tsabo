@@ -2,6 +2,10 @@ package DYNMathOptimisation;
 
 public class SimplexConstraint extends Constraint{
     String basicVariables ;
+    public String getBasicVariables() {
+        return basicVariables;
+    }
+
     Double basicVariablesCoefficient ;
     public SimplexConstraint(String syntax , String basicVariables) {
         super(syntax);

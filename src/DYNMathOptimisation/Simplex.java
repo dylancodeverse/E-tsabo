@@ -342,6 +342,24 @@ public class Simplex {
         }
         return minP ;
     }
+    public Constraint getEquation() {
+        return equation;
+    }
+    public void setEquation(Constraint equation) {
+        this.equation = equation;
+    }
+    public SimplexConstraint[] getMatrix() {
+        return matrix;
+    }
+    public void setMatrix(SimplexConstraint[] matrix) {
+        this.matrix = matrix;
+    }
+    public Constraint getDecisionConstraint() {
+        return decisionConstraint;
+    }
+    public void setDecisionConstraint(Constraint decisionConstraint) {
+        this.decisionConstraint = decisionConstraint;
+    }
 
 
 }

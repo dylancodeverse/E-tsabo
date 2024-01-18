@@ -11,6 +11,12 @@ public class Constraint {
     Double secondMember ;
     
 
+    public Double getSecondMember() {
+        return secondMember;
+    }
+    public void setSecondMember(Double secondMember) {
+        this.secondMember = secondMember;
+    }
     public Constraint(String syntax) {
         originSyntax =syntax ;
         StringBuffer s = new StringBuffer(syntax) ;
