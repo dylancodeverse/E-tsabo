@@ -3,6 +3,7 @@ package main.medicament;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 
 import main.DYNMathOptimisation.Simplex;
@@ -137,8 +138,17 @@ public class Medicament{
         for (int i = 0; i < symptomes.length; i++) {
             int indexSoins = medicaments[0].getIndexSoins(symptomes[i]);
             equations[indexSoins] =equations[indexSoins].replace("= 0", "="+ -1* symptomes[i].getNiveau() ) ;
+
         }
-        return equations ;
+        ArrayList<String>s = new ArrayList<>();
+
+        for (int i = 0; i < equations.length; i++) {
+            if(!equations[i].contains("= 0")){
+                equations[i] =equations[i].replace("=", "<=" ) ;
+                s.add(equations[i]);
+            }
+        }
+        return s.toArray(new String  [s.size()]) ;
     }
 
     private int getIndexSoins(Symptome symptome) throws Exception {

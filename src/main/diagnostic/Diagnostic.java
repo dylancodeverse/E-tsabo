@@ -96,7 +96,11 @@ public class Diagnostic {
         // mamantatra anle nom anle aretina @ alalan'ny acces base
         setNomMaladie(connection);        
         // mamoaka anle composition ana fana
-        setCompositionMedicament(symptomes, connection);
+        try {
+            setCompositionMedicament(symptomes, connection);            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     public void setCompositionMedicament(Symptome[] symptomes2, Connection connection) throws Exception {

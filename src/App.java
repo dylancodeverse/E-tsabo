@@ -5,7 +5,15 @@ import main.diagnostic.Diagnostic;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Diagnostic.getFullDiagnostic("dylan");
-        
+        Diagnostic x = null;
+        try {
+             x = Diagnostic.getFullDiagnostic("dylan");
+             
+             System.out.println(x.getNomMaladie());            
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(x.getNomMaladie());
+        }
+
     }
 }
